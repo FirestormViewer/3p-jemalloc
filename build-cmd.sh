@@ -21,6 +21,11 @@ case "$AUTOBUILD_PLATFORM" in
         "linux64")
 
 			cd ${top}/${SOURCE_DIR}
+			#Workaround for braindead configure script with the source that insists on compiling with g3 (full debug syms),
+			#just because the compiler happens to support it! Full debug syms makes the libraries massively larger compared to the originals.
+			export CFLAGS="-g0"
+			export CXXFLAGS="-g0"
+
 			./autogen.sh
 			make -j4
 
@@ -28,7 +33,7 @@ case "$AUTOBUILD_PLATFORM" in
 			mkdir -p ${stage}/LICENSES/
 			
 			cp lib/* ${stage}/lib/release/
-			echo "5.2.1" > ${stage}/VERSION.txt
+			echo "5.3.0" > ${stage}/VERSION.txt
 			cp COPYING ${stage}/LICENSES/jemalloc.txt
 			;;
 		*)
