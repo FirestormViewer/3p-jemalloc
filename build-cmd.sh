@@ -31,9 +31,9 @@ case "$AUTOBUILD_PLATFORM" in
 
 			mkdir -p ${stage}/lib/release/
 			mkdir -p ${stage}/LICENSES/
-			
+
 			cp lib/* ${stage}/lib/release/
-			echo "5.3.0" > ${stage}/VERSION.txt
+			perl -ne 'print "$1\n" if /^\s*#define\s+JEMALLOC_VERSION\s+"([^-]+)-/' include/jemalloc/jemalloc.h > ${stage}/VERSION.txt
 			cp COPYING ${stage}/LICENSES/jemalloc.txt
 			;;
 		*)
